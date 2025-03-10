@@ -8,8 +8,8 @@ from utils import Example, extract_number_from_string
 
 
 class GSM8K(Task):
-    def __init__(self):
-        super().__init__("gsm8k", LLMClient())
+    def __init__(self, llm: LLMClient):
+        super().__init__("gsm8k", llm)
 
     def load_data(self) -> List[Example]:
         data = []

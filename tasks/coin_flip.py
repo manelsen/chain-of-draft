@@ -13,8 +13,8 @@ TEST_SET_SIZE = 250
 
 
 class CoinFlip(Task):
-    def __init__(self, flip_count: int = 4):
-        super().__init__("coin_flip", LLMClient())
+    def __init__(self, llm: LLMClient, flip_count: int = 4):
+        super().__init__("coin_flip", llm)
         self.flip_count = flip_count
         self.data_file = f"./data/coin_flip_{self.flip_count}.json"
 

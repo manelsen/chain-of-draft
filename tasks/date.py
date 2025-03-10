@@ -14,8 +14,8 @@ def get_gold(example: dict) -> str:
 
 
 class DateUnderstanding(Task):
-    def __init__(self):
-        super().__init__("date", LLMClient())
+    def __init__(self, llm: LLMClient):
+        super().__init__("date", llm)
 
     def load_data(self) -> List[Example]:
         data = []
