@@ -13,8 +13,8 @@ def get_gold(example: dict) -> str:
 
 
 class SportsUnderstanding(Task):
-    def __init__(self):
-        super().__init__("sports", LLMClient())
+    def __init__(self, llm: LLMClient):
+        super().__init__("sports", llm)
 
     def load_data(self) -> List[Example]:
         data = []

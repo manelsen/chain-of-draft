@@ -11,12 +11,14 @@ By reducing verbosity and focusing on critical insights, CoD matches or surpasse
 To run evaluation:
 ```bash
 python evaluate.py \
-    --task gsm8k \      # task: gsm8k, date, sports, or coin_flip
-    --model gpt-4o \    # model to evaluate
-    --prompt cod \      # prompting strategy: baseline, cod, cot 
-    --shot 5 \          # optional, # of fewshot examples to include in prompt, include all examples by default if omitted
+    --task gsm8k \      # Task to evaluate (options: gsm8k, date, sports, coin_flip)
+    --model gpt-4o \    # Model to be evaluated
+    --prompt cod \      # Prompting strategy (options: baseline, cod, cot)
+    --shot 5 \          # [Optional] Number of few-shot examples to include in the prompt (uses all available examples by default if omitted)
+    --url $BASE_URL \   # [Optional] Base URL for an OpenAI-compatible interface (e.g., locally hosted models)
+    --api-key $KEY \    # [Optional] API key for model access (automatically loads from environment variables for Claude and OpenAI models if not provided)
 ```
-Currently, the script supports gpt-* models, claude-* models, as well as models hosted by deepinfra and locally, with `deepinfra:` and `local:` prefix, respectively.
+Currently, the script supports Claude models, OpenAI models, as well as any model that uses an OpenAI-compatible interface.
 The evaluation results will be stored under `./results/`.
 
 All prompts and fewshot examples are stored under `./configs/{task}-{prompt}.yaml`. 

@@ -1,21 +1,13 @@
 import argparse
 import csv
 import os
-from typing import Dict
 
-from tasks.base import Task
+from llm_client import LLMClient
 from tasks.coin_flip import CoinFlip
 from tasks.date import DateUnderstanding
 from tasks.gsm8k import GSM8K
 from tasks.sports import SportsUnderstanding
 from utils import average, nth_percentile
-
-TASKS: Dict[str, Task] = {
-    "gsm8k": GSM8K(),
-    "date": DateUnderstanding(),
-    "sports": SportsUnderstanding(),
-    "coin_flip": CoinFlip(),
-}
 
 MODEL_MAPPING = {
     "gpt-4o": "gpt-4o-2024-08-06",
@@ -26,11 +18,8 @@ MODEL_MAPPING = {
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--task", choices=TASKS.keys())
-    parser.add_argument(
-        "--model",
-        default="claude3.5",
-    )
+    parser.add_argument("--task", choices=["gsm8k", "date", "sports", "coin_flip"])
+    parser.add_argument("--model", default="claude3.5")
     parser.add_argument(
         "--prompt",
         choices=["baseline", "cod", "cot"],
@@ -43,9 +32,31 @@ if __name__ == "__main__":
         default=None,
         help="Number of fewshot to be included, by default, include all fewshot examples",
     )
+    parser.add_argument(
+        "--url",
+        default=None,
+        help="Base url for llm model endpoint",
+    )
+    parser.add_argument(
+        "--api-key",
+        default=None,
+        help="API key for model access, will use api keys in environment variables for openai and claude models.",
+    )
 
     args = parser.parse_args()
-    task = TASKS[args.task]
+    llm_client = LLMClient(args.url, args.api_key)
+    match args.task:
+        case "gsm8k":
+            task = GSM8K(llm_client)
+        case "date":
+            task = DateUnderstanding(llm_client)
+        case "sports":
+            task = SportsUnderstanding(llm_client)
+        case "coin_flip":
+            task = CoinFlip(llm_client)
+        case _:
+            raise ValueError("Invalid task")
+
     model = MODEL_MAPPING.get(args.model, args.model)
     accuracy = task.evaluate(model, args.prompt, args.shot)
     results = [
