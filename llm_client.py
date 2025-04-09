@@ -4,8 +4,9 @@ from openai import OpenAI
 from dotenv import load_dotenv
 load_dotenv()
 class LLMClient:
-    def __init__(self, base_url: str = 'https://openrouter.ai/api/v1', api_key: str = None):
-        self.openai_client = OpenAI(base_url=base_url, api_key=os.getenv('OPENAI_API_KEY'))
+    def __init__(self, base_url: str = None, api_key: str = None):
+        effective_base_url = base_url if base_url is not None else 'https://openrouter.ai/api/v1'
+        self.openai_client = OpenAI(base_url=effective_base_url, api_key=os.getenv('OPENAI_API_KEY'))
 
     def request(
         self,

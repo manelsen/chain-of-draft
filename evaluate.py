@@ -14,7 +14,8 @@ MODEL_MAPPING = {
     "llama31": "nvidia/llama-3.1-nemotron-ultra-253b-v1:free",
     "qwen": "qwen/qwen2.5-vl-32b-instruct:free",
     "gemma": "google/gemma-3-27b-it:free",
-    "gemini": "google/gemini-2.0-flash-thinking-exp:free",
+    "geminiTh": "google/gemini-2.0-flash-thinking-exp:free",
+    "gemini": "google/gemini-2.0-flash-exp:free",
 }
 
 if __name__ == "__main__":
