@@ -1,10 +1,11 @@
 import os
 
 from openai import OpenAI
-
+from dotenv import load_dotenv
+load_dotenv()
 class LLMClient:
-    def __init__(self, base_url: str = None, api_key: str = None):
-        self.openai_client = OpenAI(base_url='https://openrouter.ai/api/v1', api_key=api_key or os.getenv("OPENAI_API_KEY") or "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")
+    def __init__(self, base_url: str = 'https://openrouter.ai/api/v1', api_key: str = None):
+        self.openai_client = OpenAI(base_url=base_url, api_key=os.getenv('OPENAI_API_KEY'))
 
     def request(
         self,
@@ -23,8 +24,7 @@ class LLMClient:
         token_count = completion.usage.completion_tokens
         return final_response, token_count
 
-
 if __name__ == "__main__":
     llm = LLMClient()
-    response, count = llm.request("hello", "meta-llama/llama-4-scout:free")
+    response, count = llm.request("hello", "google/gemini-2.0-flash-thinking-exp:free")
     print(response, count)
