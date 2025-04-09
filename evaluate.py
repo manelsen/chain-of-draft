@@ -10,16 +10,16 @@ from tasks.sports import SportsUnderstanding
 from utils import average, nth_percentile
 
 MODEL_MAPPING = {
-    "gpt-4o": "gpt-4o-2024-08-06",
-    "gpt-4o-mini": "gpt-4o-mini-2024-07-18",
-    "sonnet": "claude-3-5-sonnet-20240620",
-    "haiku": "claude-3-5-haiku-20241022",
+    "deepseek": "deepseek/deepseek-chat-v3-0324:free",
+    "llama31": "nvidia/llama-3.1-nemotron-ultra-253b-v1:free",
+    "qwen": "qwen/qwen2.5-vl-32b-instruct:free",
+    "gemma": "google/gemma-3-27b-it:free",
 }
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--task", choices=["gsm8k", "date", "sports", "coin_flip"])
-    parser.add_argument("--model", default="claude3.5")
+    parser.add_argument("--model", default="gemma")
     parser.add_argument(
         "--prompt",
         choices=["baseline", "cod", "cot"],
